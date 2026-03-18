@@ -1,4 +1,5 @@
 const http = require('http');
+const https = require('https');
 const WebSocket = require('ws');
 const fs = require('fs');
 const path = require('path');
@@ -7,17 +8,21 @@ const url = require('url');
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'data.json');
 
+// Mapa de instâncias para webhooks do n8n
+const WEBHOOKS = {
+  'acutix':   'https://n8n-n8n.mvnptn.easypanel.host/webhook/painel-concluido-acutix',
+  'Boafarma': 'https://n8n-n8n.mvnptn.easypanel.host/webhook/painel-concluido-boafarma',
+  'teste':    'https://n8n-n8n.mvnptn.easypanel.host/webhook/painel-concluido-teste'
+};
+
 function loadData() {
   if (!fs.existsSync(DATA_FILE)) {
     const initial = { queue: [], history: [] };
     fs.writeFileSync(DATA_FILE, JSON.stringify(initial, null, 2));
     return initial;
   }
-  try {
-    return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
-  } catch(e) {
-    return { queue: [], history: [] };
-  }
+  try { return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); }
+  catch(e) { return { queue: [], history: [] }; }
 }
 
 function saveData(data) {
@@ -26,11 +31,27 @@ function saveData(data) {
 
 let appData = loadData();
 
-// Clean old concluded clients (keep last 20)
 function cleanHistory() {
-  if (appData.history.length > 20) {
-    appData.history = appData.history.slice(0, 20);
-  }
+  if (appData.history.length > 20) appData.history = appData.history.slice(0, 20);
+}
+
+function notifyN8N(remoteJid, instance) {
+  const webhookUrl = WEBHOOKS[instance];
+  if (!webhookUrl) { console.log(`Instância desconhecida: ${instance}`); return; }
+  const payload = JSON.stringify({ remoteJid, instance });
+  const urlObj = new URL(webhookUrl);
+  const options = {
+    hostname: urlObj.hostname,
+    path: urlObj.pathname,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(payload) }
+  };
+  const req = https.request(options, (res) => {
+    console.log(`n8n [${instance}] notificado: ${res.statusCode}`);
+  });
+  req.on('error', (e) => console.error(`Erro ao notificar n8n [${instance}]:`, e.message));
+  req.write(payload);
+  req.end();
 }
 
 const server = http.createServer((req, res) => {
@@ -50,7 +71,6 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // n8n sends new client
   if (pathname === '/novo-cliente' && req.method === 'POST') {
     let body = '';
     req.on('data', chunk => body += chunk);
@@ -61,15 +81,15 @@ const server = http.createServer((req, res) => {
           id: Date.now().toString(),
           nome: client.nome || 'Cliente',
           remoteJid: client.remoteJid || '',
+          instance: client.instance || '',
           chegou: new Date().toISOString(),
           status: 'aguardando',
           assumidoEm: null,
-          encerradoEm: null,
-          alertado: false
+          encerradoEm: null
         };
-        // Avoid duplicate by remoteJid if already waiting/active
         const existing = appData.queue.find(c =>
           c.remoteJid === newClient.remoteJid &&
+          c.instance === newClient.instance &&
           (c.status === 'aguardando' || c.status === 'em_atendimento')
         );
         if (existing) {
@@ -82,7 +102,7 @@ const server = http.createServer((req, res) => {
         broadcast({ type: 'novo_cliente', client: newClient });
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: true, id: newClient.id }));
-      } catch (e) {
+      } catch(e) {
         res.writeHead(400);
         res.end(JSON.stringify({ error: 'Invalid JSON' }));
       }
@@ -90,7 +110,6 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Mark as in attendance
   if (pathname.startsWith('/assumir/') && req.method === 'POST') {
     const clientId = pathname.split('/')[2];
     const client = appData.queue.find(c => c.id === clientId);
@@ -105,7 +124,6 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Mark as concluded
   if (pathname.startsWith('/encerrar/') && req.method === 'POST') {
     const clientId = pathname.split('/')[2];
     const client = appData.queue.find(c => c.id === clientId);
@@ -117,6 +135,7 @@ const server = http.createServer((req, res) => {
       cleanHistory();
       saveData(appData);
       broadcast({ type: 'atualizar', queue: appData.queue, history: appData.history });
+      if (client.remoteJid && client.instance) notifyN8N(client.remoteJid, client.instance);
     }
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ success: true }));
