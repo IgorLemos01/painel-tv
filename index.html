@@ -228,6 +228,14 @@ footer{display:flex;align-items:center;justify-content:space-between;padding:0.5
 const API=window.location.origin,WS_URL=API.replace('http','ws');
 let queue=[],history=[],timers={},alertedIds=new Set(),ws=null;
 
+function formatNumber(num){
+  if(!num)return'';
+  const n=num.replace(/\D/g,'');
+  if(n.length===13)return`+${n.slice(0,2)} (${n.slice(2,4)}) ${n.slice(4,9)}-${n.slice(9)}`;
+  if(n.length===12)return`+${n.slice(0,2)} (${n.slice(2,4)}) ${n.slice(4,8)}-${n.slice(8)}`;
+  return num;
+}  
+
 function connect(){
   ws=new WebSocket(WS_URL);
   ws.onopen=()=>setWsStatus(true);
@@ -286,6 +294,7 @@ function cardHtml(c,status){
   const concluirBtn=status==='active'?`<button class="btn-concluir" onclick="concluir('${c.id}')">✅ Concluir Atendimento</button>`:'';
   return `<div class="card ${status}${urgent?' urgent':''}" id="card-${c.id}">
     <div class="card-name">${c.nome}</div>
+    <div class="card-number">📱 ${formatNumber(c.numero||c.remoteJid||'')}</div>
     ${urgent?'<div class="urgent-tag">⚡ Urgente — sem atendimento</div>':''}
     <div class="card-timer">
       <div class="timer-dot"></div>
