@@ -155,6 +155,8 @@ const server = http.createServer(async (req, res) => {
           nome: client.nome || 'Cliente',
           remoteJid: client.remoteJid || '',
           instance: client.instance || '',
+          numero: client.numero || '',
+          tipo: client.tipo || null,  
           chegou: new Date().toISOString(),
           status: 'aguardando',
           assumidoEm: null,
