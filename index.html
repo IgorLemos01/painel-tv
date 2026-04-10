@@ -288,15 +288,29 @@ function renderCol(colId,items,status){
   col.innerHTML=items.map(c=>cardHtml(c,status)).join('');
 }
 
-function cardHtml(c,status){
-  const urgent=status==='waiting'&&isUrgent(c);
-  const timeRef=status==='active'&&c.assumidoEm?c.assumidoEm:c.chegou;
-  const label=status==='active'?'em atendimento':'aguardando';
-  const concluirBtn=status==='active'?`<button class="btn-concluir" onclick="concluir('${c.id}')">✅ Concluir Atendimento</button>`:'';
-  return `<div class="card ${status}${urgent?' urgent':''}" id="card-${c.id}">
-    <div class="card-name">${c.nome}</div>
-    <div class="card-number">📱 ${formatNumber(c.numero||c.remoteJid||'')}</div>
-    ${urgent?'<div class="urgent-tag">⚡ Urgente — sem atendimento</div>':''}
+function cardHtml(c, status) {
+  const urgent = status === 'waiting' && isUrgent(c);
+  const timeRef = status === 'active' && c.assumidoEm ? c.assumidoEm : c.chegou;
+  const label = status === 'active' ? 'em atendimento' : 'aguardando';
+
+  // nome ou destaque do número
+  const semNome = c.semNome || !c.nome || c.nome === 'Cliente';
+  const numeroFormatado = formatNumber(c.numero || c.remoteJid || '');
+  const nomeHtml = semNome
+    ? `<div class="card-name">
+         <span style="color:var(--text-dim);font-size:1rem;font-weight:600">Cliente</span>
+         <span class="card-numero-destaque">${numeroFormatado}</span>
+       </div>`
+    : `<div class="card-name">${c.nome}</div>`;
+
+  const concluirBtn = status === 'active'
+    ? `<button class="btn-concluir" onclick="concluir('${c.id}')">✅ Concluir Atendimento</button>`
+    : '';
+
+  return `<div class="card ${status}${urgent ? ' urgent' : ''}" id="card-${c.id}">
+    ${nomeHtml}
+    <div class="card-number">📱 ${numeroFormatado}</div>
+    ${urgent ? '<div class="urgent-tag">⚡ Urgente — sem atendimento</div>' : ''}
     <div class="card-timer">
       <div class="timer-dot"></div>
       <div>
