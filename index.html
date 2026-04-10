@@ -46,7 +46,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0.9
 .hist-btn:hover{background:rgba(0,214,143,0.15);border-color:rgba(0,214,143,0.4);}
 .hist-count{background:var(--green);color:#001a0f;border-radius:20px;padding:0.1rem 0.45rem;font-size:0.65rem;font-weight:800;line-height:1.4;}
 
- .board{display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;min-height:0;}
+.board{display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;min-height:0;}
 .col{display:flex;flex-direction:column;border-right:1px solid rgba(29,110,245,0.1);overflow:hidden;min-height:0;}
 .col-body{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.7rem;min-height:0;}
 .col-header{display:flex;align-items:center;gap:0.6rem;padding:0.85rem 1.5rem;border-bottom:2px solid;flex-shrink:0;}
@@ -61,7 +61,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0.9
 .col-count{font-size:0.82rem;font-weight:900;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;}
 .waiting .col-count{background:var(--yellow);color:#1a0f00;}
 .active .col-count{background:var(--blue);color:#fff;}
-.col-body{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.7rem;}
 .col-body::-webkit-scrollbar{width:2px;}
 .col-body::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:2px;}
 
@@ -74,7 +73,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0.9
 .card.waiting.urgent::before{background:var(--red);}
 .card.active::before{background:var(--blue);}
 
-.card-number{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:600;color:var(--text-dim);letter-spacing:0.04em;margin-bottom:0-+.5rem;}
+.card-number{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:600;color:var(--text-dim);letter-spacing:0.04em;margin-bottom:0.5rem;}
 .card-name{font-family:'Barlow Condensed',sans-serif;font-size:1.35rem;font-weight:800;letter-spacing:0.02em;color:var(--white);line-height:1.1;margin-bottom:0.5rem;}
 .urgent-tag{display:inline-flex;align-items:center;gap:0.3rem;background:var(--red);color:white;font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:0.18rem 0.45rem;border-radius:4px;margin-bottom:0.5rem;}
 .card-timer{display:flex;align-items:center;gap:0.4rem;margin-bottom:0.75rem;}
@@ -88,7 +87,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0.9
 .card.active .timer-text{color:var(--blue);}
 .card-label{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-top:1px;}
 
-.btn-concluir{width:100%;background:rgba(0,214,143,0.12);border:1px solid rgba(0,214,143,0.3);border-radius:9px;color:var(--green);padding:0.5rem 0.75rem;font-family:'Barlow',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+/* Botões */
+.btn-row{display:flex;gap:0.5rem;margin-top:0.1rem;}
+.btn-iniciar{flex:1;background:rgba(29,110,245,0.15);border:1px solid rgba(29,110,245,0.4);border-radius:9px;color:var(--blue);padding:0.5rem 0.75rem;font-family:'Barlow',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+.btn-iniciar:hover{background:rgba(29,110,245,0.28);border-color:rgba(29,110,245,0.7);transform:translateY(-1px);}
+.btn-iniciar:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+.btn-concluir{flex:1;background:rgba(0,214,143,0.12);border:1px solid rgba(0,214,143,0.3);border-radius:9px;color:var(--green);padding:0.5rem 0.75rem;font-family:'Barlow',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
 .btn-concluir:hover{background:rgba(0,214,143,0.22);border-color:rgba(0,214,143,0.5);transform:translateY(-1px);}
 
 .empty-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;opacity:0.2;padding:2rem;}
@@ -132,6 +136,7 @@ footer{display:flex;align-items:center;justify-content:space-between;padding:0.5
 .toast.novo{border-color:var(--blue-border);}
 .toast.urgente{border-color:var(--red-border);background:rgba(255,61,90,0.1);}
 .toast.concluido{border-color:var(--green-border);}
+.toast.assumido{border-color:var(--blue-border);background:rgba(29,110,245,0.1);}
 .toast-icon{font-size:1.2rem;flex-shrink:0;}
 .toast-title{font-size:0.8rem;font-weight:700;color:var(--white);margin-bottom:0.1rem;}
 .toast-sub{font-size:0.7rem;color:var(--text-dim);}
@@ -235,7 +240,7 @@ function formatNumber(num){
   if(n.length===13)return`+${n.slice(0,2)} (${n.slice(2,4)}) ${n.slice(4,9)}-${n.slice(9)}`;
   if(n.length===12)return`+${n.slice(0,2)} (${n.slice(2,4)}) ${n.slice(4,8)}-${n.slice(8)}`;
   return num;
-}  
+}
 
 function connect(){
   ws=new WebSocket(WS_URL);
@@ -293,7 +298,6 @@ function cardHtml(c, status) {
   const timeRef = status === 'active' && c.assumidoEm ? c.assumidoEm : c.chegou;
   const label = status === 'active' ? 'em atendimento' : 'aguardando';
 
-  // nome ou destaque do número
   const semNome = c.semNome || !c.nome || c.nome === 'Cliente';
   const numeroFormatado = formatNumber(c.numero || c.remoteJid || '');
   const nomeHtml = semNome
@@ -303,18 +307,23 @@ function cardHtml(c, status) {
        </div>`
     : `<div class="card-name">${c.nome}</div>`;
 
-  const concluirBtn = status === 'active'
-    ? `<button class="btn-concluir" onclick="concluir('${c.id}')">✅ Concluir Atendimento</button>`
+  // Badge Fixo/Celular
+  const tipoBadge = c.tipo
+    ? `<span style="margin-left:0.5rem;background:${c.tipo==='Fixo'?'rgba(29,110,245,0.2)':'rgba(0,214,143,0.2)'};border:1px solid ${c.tipo==='Fixo'?'rgba(29,110,245,0.4)':'rgba(0,214,143,0.4)'};color:${c.tipo==='Fixo'?'var(--blue)':'var(--green)'};font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.45rem;border-radius:4px;">${c.tipo==='Fixo'?'📞 Fixo':'📱 Celular'}</span>`
     : '';
+
+  // Botões por status
+  const botoesHtml = status === 'waiting'
+    ? `<div class="btn-row">
+         <button class="btn-iniciar" onclick="iniciar('${c.id}', this)">▶ Iniciar Atendimento</button>
+       </div>`
+    : `<div class="btn-row">
+         <button class="btn-concluir" onclick="concluir('${c.id}')">✅ Concluir Atendimento</button>
+       </div>`;
 
   return `<div class="card ${status}${urgent ? ' urgent' : ''}" id="card-${c.id}">
     ${nomeHtml}
-    <div class="card-number">
-      📱 ${numeroFormatado}
-      ${c.tipo ? `<span style="margin-left:0.5rem;background:${c.tipo==='Fixo'?'rgba(29,110,245,0.2)':'rgba(0,214,143,0.2)'};border:1px solid ${c.tipo==='Fixo'?'rgba(29,110,245,0.4)':'rgba(0,214,143,0.4)'};color:${c.tipo==='Fixo'?'var(--blue)':'var(--green)'};font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.45rem;border-radius:4px;">
-        ${c.tipo==='Fixo'?'📞 Fixo':'📱 Celular'}
-      </span>` : ''}
-    </div>
+    <div class="card-number">📱 ${numeroFormatado}${tipoBadge}</div>
     ${urgent ? '<div class="urgent-tag">⚡ Urgente — sem atendimento</div>' : ''}
     <div class="card-timer">
       <div class="timer-dot"></div>
@@ -323,10 +332,29 @@ function cardHtml(c, status) {
         <div class="card-label">${label}</div>
       </div>
     </div>
-    ${concluirBtn}
+    ${botoesHtml}
   </div>`;
 }
 
+// ── Iniciar atendimento manualmente ───────────────────────────────────────
+async function iniciar(id, btn) {
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Iniciando...'; }
+  try {
+    await fetch(`${API}/assumir/${id}`, { method: 'POST' });
+    const client = queue.find(c => c.id === id);
+    if (client) {
+      client.status = 'em_atendimento';
+      client.assumidoEm = new Date().toISOString();
+      render();
+      toast('assumido', '💬 Em atendimento', (client.nome || 'Cliente') + ' — atendimento iniciado');
+    }
+  } catch(e) {
+    console.error(e);
+    if (btn) { btn.disabled = false; btn.textContent = '▶ Iniciar Atendimento'; }
+  }
+}
+
+// ── Concluir atendimento ──────────────────────────────────────────────────
 async function concluir(id){
   try{
     await fetch(`${API}/encerrar/${id}`,{method:'POST'});
@@ -337,7 +365,7 @@ async function concluir(id){
       queue=queue.filter(c=>c.id!==id);
       if(timers[id]){clearInterval(timers[id]);delete timers[id];}
       render();
-      toast('concluido','✅ Concluído',client.nome+' — atendimento finalizado');
+      toast('concluido','✅ Concluído',(client.nome||'Cliente')+' — atendimento finalizado');
     }
   }catch(e){console.error(e);}
 }
@@ -352,14 +380,15 @@ function renderDrawer(){
     return;
   }
   body.innerHTML=history.map(c=>{
-    const inicial=c.nome.charAt(0).toUpperCase();
+    const nome=c.nome||'Cliente';
+    const inicial=nome.charAt(0).toUpperCase();
     const hora=c.encerradoEm?new Date(c.encerradoEm).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'--';
     const dur=c.assumidoEm&&c.encerradoEm?getElapsedBetween(c.assumidoEm,c.encerradoEm):'--';
     const chegouHora=new Date(c.chegou).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
     return `<div class="hist-item">
       <div class="hist-avatar">${inicial}</div>
       <div class="hist-info">
-        <div class="hist-name">${c.nome}</div>
+        <div class="hist-name">${nome}</div>
         <div class="hist-meta">Chegou às ${chegouHora} · Concluído às ${hora}</div>
       </div>
       <div>
@@ -387,14 +416,14 @@ function startTimer(id){
       card.querySelector('.timer-dot').style.background='var(--red)';
       card.querySelector('.timer-text').style.color='var(--red)';
       playSound('urgente');flashAlert();
-      toast('urgente','🚨 Urgente!',client.nome+' aguarda há mais de 5 minutos');
+      toast('urgente','🚨 Urgente!',(client.nome||'Cliente')+' aguarda há mais de 5 minutos');
     }
     if(client.status==='em_atendimento'&&client.assumidoEm){
       const mins=(Date.now()-new Date(client.assumidoEm))/60000;
       if(mins>=5&&!alertedIds.has(id+'_long')){
         alertedIds.add(id+'_long');
         playSound('urgente');
-        toast('urgente','⏰ Atendimento longo!',client.nome+' está em atendimento há mais de 5 minutos');
+        toast('urgente','⏰ Atendimento longo!',(client.nome||'Cliente')+' está em atendimento há mais de 5 minutos');
       }
     }
   },1000);
@@ -431,7 +460,8 @@ function flashAlert(){const o=document.getElementById('alertOverlay');o.classLis
 function toast(type,title,sub){
   const c=document.getElementById('toastContainer'),t=document.createElement('div');
   t.className=`toast ${type}`;
-  t.innerHTML=`<div class="toast-icon">${type==='novo'?'🙋':type==='urgente'?'🚨':'✅'}</div><div><div class="toast-title">${title}</div><div class="toast-sub">${sub}</div></div>`;
+  const icons={novo:'🙋',urgente:'🚨',concluido:'✅',assumido:'💬'};
+  t.innerHTML=`<div class="toast-icon">${icons[type]||'ℹ️'}</div><div><div class="toast-title">${title}</div><div class="toast-sub">${sub}</div></div>`;
   c.appendChild(t);setTimeout(()=>t.style.opacity='0',4500);setTimeout(()=>t.remove(),5000);
 }
 
