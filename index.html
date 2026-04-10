@@ -309,7 +309,12 @@ function cardHtml(c, status) {
 
   return `<div class="card ${status}${urgent ? ' urgent' : ''}" id="card-${c.id}">
     ${nomeHtml}
-    <div class="card-number">📱 ${numeroFormatado}</div>
+    <div class="card-number">
+      📱 ${numeroFormatado}
+      ${c.tipo ? `<span style="margin-left:0.5rem;background:${c.tipo==='Fixo'?'rgba(29,110,245,0.2)':'rgba(0,214,143,0.2)'};border:1px solid ${c.tipo==='Fixo'?'rgba(29,110,245,0.4)':'rgba(0,214,143,0.4)'};color:${c.tipo==='Fixo'?'var(--blue)':'var(--green)'};font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.45rem;border-radius:4px;">
+        ${c.tipo==='Fixo'?'📞 Fixo':'📱 Celular'}
+      </span>` : ''}
+    </div>
     ${urgent ? '<div class="urgent-tag">⚡ Urgente — sem atendimento</div>' : ''}
     <div class="card-timer">
       <div class="timer-dot"></div>
