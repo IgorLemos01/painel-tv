@@ -32,7 +32,23 @@ async function dbInit() {
       status TEXT DEFAULT 'concluido'
     );
   `);
-  console.log('Tabela atendimentos OK');
+
+  // Nova tabela: cada mensagem enviada pelo atendente
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS mensagens_atendente (
+      id SERIAL PRIMARY KEY,
+      atendimento_id TEXT NOT NULL,
+      enviado_em TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  // Índice para buscas por atendimento
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_mensagens_atendimento_id
+    ON mensagens_atendente (atendimento_id);
+  `);
+
+  console.log('Tabelas OK');
 }
 
 async function dbInsert(client) {
@@ -73,6 +89,32 @@ async function dbQuery(from, to) {
     encerradoEm: r.encerrado_em,
     status:      r.status
   }));
+}
+
+// Busca mensagens do atendente para uma lista de atendimento_ids
+async function dbQueryMensagens(atendimentoIds) {
+  if (!atendimentoIds.length) return [];
+  const result = await pool.query(
+    `SELECT atendimento_id, enviado_em
+     FROM mensagens_atendente
+     WHERE atendimento_id = ANY($1)
+     ORDER BY atendimento_id, enviado_em ASC`,
+    [atendimentoIds]
+  );
+  return result.rows;
+}
+
+// Calcula intervalos de resposta do atendente para um atendimento
+// Retorna array de segundos entre: assumidoEm→1ª msg, msg1→msg2, etc.
+function calcIntervaloResposta(assumidoEm, encerradoEm, mensagens) {
+  if (!assumidoEm || !mensagens.length) return [];
+  const timestamps = [new Date(assumidoEm), ...mensagens.map(m => new Date(m.enviado_em))];
+  const intervalos = [];
+  for (let i = 1; i < timestamps.length; i++) {
+    const diff = Math.round((timestamps[i] - timestamps[i - 1]) / 1000);
+    if (diff > 0) intervalos.push(diff);
+  }
+  return intervalos;
 }
 
 // ── Webhooks n8n ───────────────────────────────────────────────────────────
@@ -143,7 +185,7 @@ const server = http.createServer(async (req, res) => {
     return serveFile(res, path.join(__dirname, 'dashboard.html'), 'text/html');
   }
 
-  // novo-cliente
+  // ── novo-cliente ──────────────────────────────────────────────────────────
   if (pathname === '/novo-cliente' && req.method === 'POST') {
     let body = '';
     req.on('data', chunk => body += chunk);
@@ -156,7 +198,7 @@ const server = http.createServer(async (req, res) => {
           remoteJid: client.remoteJid || '',
           instance: client.instance || '',
           numero: client.numero || '',
-          tipo: client.tipo || null,  
+          tipo: client.tipo || null,
           chegou: new Date().toISOString(),
           status: 'aguardando',
           assumidoEm: null,
@@ -185,7 +227,44 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // assumir
+  // ── mensagem do atendente ─────────────────────────────────────────────────
+  // Chamado pelo n8n toda vez que fromMe=true (atendente enviou mensagem)
+  if (pathname === '/mensagem' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', async () => {
+      try {
+        const data = JSON.parse(body);
+        const { painel_id } = data;
+
+        if (!painel_id) {
+          res.writeHead(400);
+          res.end(JSON.stringify({ error: 'painel_id obrigatorio' }));
+          return;
+        }
+
+        // Só registra se o cliente está em atendimento
+        const client = appData.queue.find(c => c.id === painel_id && c.status === 'em_atendimento');
+        if (client) {
+          await pool.query(
+            `INSERT INTO mensagens_atendente (atendimento_id, enviado_em) VALUES ($1, NOW())`,
+            [painel_id]
+          );
+          console.log(`Mensagem registrada para atendimento ${painel_id}`);
+        }
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true }));
+      } catch(e) {
+        console.error('Erro /mensagem:', e.message);
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: e.message }));
+      }
+    });
+    return;
+  }
+
+  // ── assumir ───────────────────────────────────────────────────────────────
   if (pathname.startsWith('/assumir/') && req.method === 'POST') {
     const clientId = pathname.split('/')[2];
     const client = appData.queue.find(c => c.id === clientId);
@@ -200,7 +279,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // encerrar
+  // ── encerrar ──────────────────────────────────────────────────────────────
   if (pathname.startsWith('/encerrar/') && req.method === 'POST') {
     const clientId = pathname.split('/')[2];
     const client = appData.queue.find(c => c.id === clientId);
@@ -219,7 +298,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // state
+  // ── state ─────────────────────────────────────────────────────────────────
   if (pathname === '/state' && req.method === 'GET') {
     try {
       const hoje = new Date().toISOString().slice(0, 10);
@@ -233,13 +312,44 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // api/history
+  // ── api/history ───────────────────────────────────────────────────────────
   if (pathname === '/api/history' && req.method === 'GET') {
     try {
       const { from, to } = parsedUrl.query;
-      const data = await dbQuery(from, to);
+      const records = await dbQuery(from, to);
+
+      // Busca mensagens do atendente para todos os atendimentos do período
+      const ids = records.map(r => r.id);
+      const mensagens = await dbQueryMensagens(ids);
+
+      // Agrupa mensagens por atendimento_id
+      const mensagensPorAtend = {};
+      mensagens.forEach(m => {
+        if (!mensagensPorAtend[m.atendimento_id]) mensagensPorAtend[m.atendimento_id] = [];
+        mensagensPorAtend[m.atendimento_id].push(m);
+      });
+
+      // Enriquece cada registro com dados de resposta
+      const enriched = records.map(r => {
+        const msgs = mensagensPorAtend[r.id] || [];
+        const intervalos = calcIntervaloResposta(r.assumidoEm, r.encerradoEm, msgs);
+        const avgResposta = intervalos.length
+          ? Math.round(intervalos.reduce((a, b) => a + b, 0) / intervalos.length)
+          : null;
+        const maxResposta = intervalos.length ? Math.max(...intervalos) : null;
+        const minResposta = intervalos.length ? Math.min(...intervalos) : null;
+        return {
+          ...r,
+          totalMensagens: msgs.length,
+          intervaloRespostas: intervalos,
+          avgResposta,
+          maxResposta,
+          minResposta
+        };
+      });
+
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ total: data.length, data }));
+      res.end(JSON.stringify({ total: enriched.length, data: enriched }));
     } catch(e) {
       console.error('Erro /api/history:', e.message);
       res.writeHead(500);
@@ -248,7 +358,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // api/stats
+  // ── api/stats ─────────────────────────────────────────────────────────────
   if (pathname === '/api/stats' && req.method === 'GET') {
     try {
       const hoje = new Date().toISOString().slice(0, 10);
