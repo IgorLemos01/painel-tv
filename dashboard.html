@@ -15,6 +15,7 @@
   --red:#ff3d5a;--red-dim:rgba(255,61,90,0.08);--red-border:rgba(255,61,90,0.25);
   --purple:#a855f7;--purple-dim:rgba(168,85,247,0.08);--purple-border:rgba(168,85,247,0.25);
   --cyan:#06b6d4;--cyan-dim:rgba(6,182,212,0.08);--cyan-border:rgba(6,182,212,0.25);
+  --orange:#f97316;--orange-dim:rgba(249,115,22,0.08);--orange-border:rgba(249,115,22,0.25);
   --text:#e8f0ff;--text-dim:#6b82a8;--text-mid:#9ab0d0;--white:#ffffff;
 }
 html,body{width:100%;min-height:100%;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;overflow-x:hidden;}
@@ -22,25 +23,19 @@ body::before{content:'';position:fixed;inset:0;background:
   radial-gradient(ellipse 80% 50% at 10% 20%,rgba(29,110,245,0.05) 0%,transparent 60%),
   radial-gradient(ellipse 60% 60% at 90% 80%,rgba(0,214,143,0.03) 0%,transparent 60%);
   pointer-events:none;z-index:0;}
-
-/* ── LAYOUT ── */
 .layout{position:relative;z-index:1;display:grid;grid-template-rows:auto 1fr;min-height:100vh;}
-
-/* ── HEADER ── */
 header{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid rgba(29,110,245,0.15);background:rgba(6,13,26,0.9);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;}
 .header-left{display:flex;align-items:center;gap:1rem;}
 .logo{width:40px;height:40px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
 .brand h1{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;letter-spacing:0.02em;text-transform:uppercase;color:var(--white);line-height:1;}
 .brand p{font-size:0.62rem;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
 .header-right{display:flex;align-items:center;gap:1rem;}
-.nav-btn{display:flex;align-items:center;gap:0.4rem;background:rgba(29,110,245,0.1);border:1px solid rgba(29,110,245,0.2);border-radius:8px;padding:0.4rem 0.85rem;font-family:'Barlow',sans-serif;font-size:0.72rem;font-weight:700;color:var(--blue);letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;cursor:pointer;}
+.nav-btn{display:flex;align-items:center;gap:0.4rem;background:rgba(29,110,245,0.1);border:1px solid rgba(29,110,245,0.2);border-radius:8px;padding:0.4rem 0.85rem;font-family:'Barlow',sans-serif;font-size:0.72rem;font-weight:700;color:var(--blue);letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
 .nav-btn:hover{background:rgba(29,110,245,0.18);border-color:rgba(29,110,245,0.4);}
 .clock{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white);letter-spacing:0.05em;}
-
-/* ── MAIN ── */
 main{padding:1.5rem 2rem 3rem;}
 
-/* ── FILTROS ── */
+/* FILTROS */
 .filters{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap;}
 .filter-group{display:flex;align-items:center;gap:0.5rem;}
 .filter-label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);}
@@ -55,7 +50,7 @@ main{padding:1.5rem 2rem 3rem;}
 .btn-week:hover{background:rgba(0,214,143,0.08);}
 .result-info{margin-left:auto;font-size:0.7rem;color:var(--text-dim);font-weight:600;}
 
-/* ── AO VIVO ── */
+/* AO VIVO */
 .live-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.75rem;}
 .live-card{background:var(--bg2);border-radius:14px;padding:1.1rem 1.25rem;border:1px solid;position:relative;overflow:hidden;}
 .live-card.waiting{border-color:var(--yellow-border);background:linear-gradient(135deg,var(--bg2) 60%,rgba(255,184,0,0.04));}
@@ -77,16 +72,18 @@ main{padding:1.5rem 2rem 3rem;}
 .live-badge{position:absolute;top:0.8rem;right:0.8rem;background:rgba(0,214,143,0.15);border:1px solid rgba(0,214,143,0.3);border-radius:20px;padding:0.18rem 0.5rem;font-size:0.55rem;font-weight:700;color:var(--green);letter-spacing:0.08em;text-transform:uppercase;display:flex;align-items:center;gap:0.3rem;}
 .live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite;}
 
-/* ── GRID MÉTRICAS ── */
+/* GRID MÉTRICAS */
 .metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;}
 .metric-card{background:var(--bg2);border-radius:14px;padding:1.2rem 1.4rem;border:1px solid rgba(29,110,245,0.12);}
 .metric-card.span2{grid-column:span 2;}
+.metric-card.span3{grid-column:span 3;}
 .metric-header{display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;}
 .metric-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;}
 .metric-title{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);}
 
 /* Tempo cards */
 .time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;}
+.time-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:0.75rem;}
 .time-item{background:var(--bg3);border-radius:10px;padding:0.9rem 1rem;text-align:center;}
 .time-val{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;line-height:1;margin-bottom:0.2rem;}
 .time-lbl{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);}
@@ -100,6 +97,15 @@ main{padding:1.5rem 2rem 3rem;}
 .sla-pct{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:800;width:38px;text-align:right;flex-shrink:0;}
 .sla-count{font-size:0.65rem;color:var(--text-dim);width:30px;flex-shrink:0;}
 
+/* Distribuição de resposta */
+.dist-bars{display:flex;flex-direction:column;gap:0.6rem;}
+.dist-row{display:flex;align-items:center;gap:0.75rem;}
+.dist-name{font-size:0.68rem;font-weight:600;width:100px;flex-shrink:0;color:var(--text-mid);}
+.dist-bar-wrap{flex:1;background:var(--bg3);border-radius:4px;height:7px;overflow:hidden;}
+.dist-bar{height:100%;border-radius:4px;background:var(--orange);transition:width 0.8s cubic-bezier(0.34,1.2,0.64,1);}
+.dist-pct{font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:800;width:38px;text-align:right;flex-shrink:0;color:var(--orange);}
+.dist-count{font-size:0.62rem;color:var(--text-dim);width:30px;flex-shrink:0;}
+
 /* Gráfico por hora */
 .chart-wrap{position:relative;height:140px;display:flex;align-items:flex-end;gap:3px;padding-top:20px;}
 .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;}
@@ -112,7 +118,7 @@ main{padding:1.5rem 2rem 3rem;}
 .chart-grid-lines{position:absolute;top:0;left:0;right:0;bottom:18px;pointer-events:none;}
 .chart-grid-line{position:absolute;left:0;right:0;height:1px;background:rgba(29,110,245,0.08);}
 
-/* Comparativo dias */
+/* Comparativo */
 .compare-list{display:flex;flex-direction:column;gap:0.55rem;}
 .compare-row{display:flex;align-items:center;gap:0.75rem;}
 .compare-date{font-size:0.7rem;font-weight:600;color:var(--text-mid);width:90px;flex-shrink:0;}
@@ -122,7 +128,7 @@ main{padding:1.5rem 2rem 3rem;}
 .compare-bar.today{background:var(--green);}
 .compare-num{font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;font-weight:800;color:var(--white);width:30px;text-align:right;flex-shrink:0;}
 
-/* Tabela recentes */
+/* Tabela */
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;}
 thead tr{border-bottom:1px solid rgba(29,110,245,0.15);}
@@ -136,9 +142,12 @@ td{padding:0.6rem 0.75rem;font-size:0.78rem;}
 .badge-rapido{background:rgba(0,214,143,0.15);color:var(--green);}
 .badge-medio{background:rgba(255,184,0,0.15);color:var(--yellow);}
 .badge-lento{background:rgba(255,61,90,0.15);color:var(--red);}
+.badge-semdata{background:rgba(107,130,168,0.15);color:var(--text-dim);}
 .empty-table{text-align:center;padding:2rem;color:var(--text-dim);font-size:0.8rem;}
 
-/* Seção title */
+/* Nota de cobertura */
+.coverage-note{font-size:0.62rem;color:var(--text-dim);margin-top:0.75rem;padding:0.5rem 0.75rem;background:var(--bg3);border-radius:8px;border-left:3px solid var(--orange);}
+
 .section-title{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:0.75rem;}
 
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
@@ -207,77 +216,46 @@ td{padding:0.6rem 0.75rem;font-size:0.78rem;}
       </div>
     </div>
 
-    <!-- MÉTRICAS PRINCIPAIS -->
-    <div class="section-title">🕐 Tempos médios — período filtrado</div>
+    <!-- MÉTRICAS TRADICIONAIS -->
+    <div class="section-title">🕐 Tempos do atendimento — período filtrado</div>
     <div class="metrics-grid anim" style="animation-delay:0.05s">
 
-      <!-- Tempo de espera -->
       <div class="metric-card">
         <div class="metric-header">
           <div class="metric-icon" style="background:rgba(255,184,0,0.12)">⏳</div>
           <div class="metric-title">Tempo de Espera<br><small style="font-size:0.58rem;opacity:0.7">(chegou → assumido)</small></div>
         </div>
         <div class="time-grid">
-          <div class="time-item">
-            <div class="time-val" style="color:var(--yellow)" id="esperaAvg">—</div>
-            <div class="time-lbl">Média</div>
-          </div>
-          <div class="time-item">
-            <div class="time-val" style="color:var(--red)" id="esperaMax">—</div>
-            <div class="time-lbl">Máximo</div>
-          </div>
-          <div class="time-item">
-            <div class="time-val" style="color:var(--green)" id="esperaMin">—</div>
-            <div class="time-lbl">Mínimo</div>
-          </div>
+          <div class="time-item"><div class="time-val" style="color:var(--yellow)" id="esperaAvg">—</div><div class="time-lbl">Média</div></div>
+          <div class="time-item"><div class="time-val" style="color:var(--red)" id="esperaMax">—</div><div class="time-lbl">Máximo</div></div>
+          <div class="time-item"><div class="time-val" style="color:var(--green)" id="esperaMin">—</div><div class="time-lbl">Mínimo</div></div>
         </div>
       </div>
 
-      <!-- Tempo de atendimento -->
       <div class="metric-card">
         <div class="metric-header">
           <div class="metric-icon" style="background:rgba(29,110,245,0.12)">💬</div>
           <div class="metric-title">Tempo de Atendimento<br><small style="font-size:0.58rem;opacity:0.7">(assumido → concluído)</small></div>
         </div>
         <div class="time-grid">
-          <div class="time-item">
-            <div class="time-val" style="color:var(--blue)" id="atendAvg">—</div>
-            <div class="time-lbl">Média</div>
-          </div>
-          <div class="time-item">
-            <div class="time-val" style="color:var(--red)" id="atendMax">—</div>
-            <div class="time-lbl">Máximo</div>
-          </div>
-          <div class="time-item">
-            <div class="time-val" style="color:var(--green)" id="atendMin">—</div>
-            <div class="time-lbl">Mínimo</div>
-          </div>
+          <div class="time-item"><div class="time-val" style="color:var(--blue)" id="atendAvg">—</div><div class="time-lbl">Média</div></div>
+          <div class="time-item"><div class="time-val" style="color:var(--red)" id="atendMax">—</div><div class="time-lbl">Máximo</div></div>
+          <div class="time-item"><div class="time-val" style="color:var(--green)" id="atendMin">—</div><div class="time-lbl">Mínimo</div></div>
         </div>
       </div>
 
-      <!-- Tempo total (espera + atend) -->
       <div class="metric-card">
         <div class="metric-header">
           <div class="metric-icon" style="background:rgba(168,85,247,0.12)">⚡</div>
           <div class="metric-title">Tempo Total por Cliente<br><small style="font-size:0.58rem;opacity:0.7">(chegou → concluído)</small></div>
         </div>
         <div class="time-grid">
-          <div class="time-item">
-            <div class="time-val" style="color:var(--purple)" id="totalAvg">—</div>
-            <div class="time-lbl">Média</div>
-          </div>
-          <div class="time-item">
-            <div class="time-val" style="color:var(--red)" id="totalMax">—</div>
-            <div class="time-lbl">Máximo</div>
-          </div>
-          <div class="time-item">
-            <div class="time-val" style="color:var(--green)" id="totalMin">—</div>
-            <div class="time-lbl">Mínimo</div>
-          </div>
+          <div class="time-item"><div class="time-val" style="color:var(--purple)" id="totalAvg">—</div><div class="time-lbl">Média</div></div>
+          <div class="time-item"><div class="time-val" style="color:var(--red)" id="totalMax">—</div><div class="time-lbl">Máximo</div></div>
+          <div class="time-item"><div class="time-val" style="color:var(--green)" id="totalMin">—</div><div class="time-lbl">Mínimo</div></div>
         </div>
       </div>
 
-      <!-- SLA -->
       <div class="metric-card">
         <div class="metric-header">
           <div class="metric-icon" style="background:rgba(6,182,212,0.12)">🎯</div>
@@ -303,12 +281,9 @@ td{padding:0.6rem 0.75rem;font-size:0.78rem;}
             <div class="sla-count" id="slaCntLento"></div>
           </div>
         </div>
-        <div style="margin-top:0.75rem;font-size:0.58rem;color:var(--text-dim);">
-          Rápido &lt;5min · Médio 5-10min · Lento &gt;10min
-        </div>
+        <div style="margin-top:0.75rem;font-size:0.58rem;color:var(--text-dim);">Rápido &lt;5min · Médio 5-10min · Lento &gt;10min</div>
       </div>
 
-      <!-- Gráfico por hora (hoje) -->
       <div class="metric-card span2">
         <div class="metric-header">
           <div class="metric-icon" style="background:rgba(29,110,245,0.12)">📈</div>
@@ -321,10 +296,88 @@ td{padding:0.6rem 0.75rem;font-size:0.78rem;}
 
     </div>
 
+    <!-- TEMPO DE RESPOSTA DO ATENDENTE -->
+    <div class="section-title">⚡ Tempo de resposta do atendente — período filtrado</div>
+    <div class="metrics-grid anim" style="animation-delay:0.08s">
+
+      <!-- 5 métricas de resposta -->
+      <div class="metric-card span3">
+        <div class="metric-header">
+          <div class="metric-icon" style="background:rgba(249,115,22,0.12)">⚡</div>
+          <div class="metric-title">Tempo entre mensagens do atendente<br><small style="font-size:0.58rem;opacity:0.7">Mede o intervalo real entre cada resposta enviada, excluindo o tempo que o cliente demora para responder</small></div>
+        </div>
+        <div class="time-grid-5">
+          <div class="time-item">
+            <div class="time-val" style="color:var(--orange)" id="respAvg">—</div>
+            <div class="time-lbl">Média</div>
+          </div>
+          <div class="time-item">
+            <div class="time-val" style="color:var(--cyan)" id="respMediana">—</div>
+            <div class="time-lbl">Mediana</div>
+          </div>
+          <div class="time-item">
+            <div class="time-val" style="color:var(--red)" id="respMax">—</div>
+            <div class="time-lbl">Máximo</div>
+          </div>
+          <div class="time-item">
+            <div class="time-val" style="color:var(--green)" id="respMin">—</div>
+            <div class="time-lbl">Mínimo</div>
+          </div>
+          <div class="time-item">
+            <div class="time-val" style="color:var(--purple)" id="respTotal">—</div>
+            <div class="time-lbl">Total de respostas</div>
+          </div>
+        </div>
+        <div class="coverage-note" id="respCoverage">
+          Aguardando dados...
+        </div>
+      </div>
+
+      <!-- Distribuição por faixa de tempo -->
+      <div class="metric-card span2">
+        <div class="metric-header">
+          <div class="metric-icon" style="background:rgba(249,115,22,0.12)">📊</div>
+          <div class="metric-title">Distribuição dos tempos de resposta</div>
+        </div>
+        <div class="dist-bars" id="distBars">
+          <div style="color:var(--text-dim);font-size:0.75rem">Sem dados no período</div>
+        </div>
+      </div>
+
+      <!-- SLA de resposta do atendente -->
+      <div class="metric-card">
+        <div class="metric-header">
+          <div class="metric-icon" style="background:rgba(249,115,22,0.12)">🎯</div>
+          <div class="metric-title">SLA de Resposta do Atendente</div>
+        </div>
+        <div class="sla-bars">
+          <div class="sla-row">
+            <div class="sla-name" style="color:var(--green);font-size:0.65rem">✅ Imediato</div>
+            <div class="sla-bar-wrap"><div class="sla-bar" style="background:var(--green)" id="slaRespBarImediato"></div></div>
+            <div class="sla-pct" style="color:var(--green)" id="slaRespPctImediato">—</div>
+            <div class="sla-count" id="slaRespCntImediato"></div>
+          </div>
+          <div class="sla-row">
+            <div class="sla-name" style="color:var(--yellow);font-size:0.65rem">⚠️ Normal</div>
+            <div class="sla-bar-wrap"><div class="sla-bar" style="background:var(--yellow)" id="slaRespBarNormal"></div></div>
+            <div class="sla-pct" style="color:var(--yellow)" id="slaRespPctNormal">—</div>
+            <div class="sla-count" id="slaRespCntNormal"></div>
+          </div>
+          <div class="sla-row">
+            <div class="sla-name" style="color:var(--red);font-size:0.65rem">🚨 Demorado</div>
+            <div class="sla-bar-wrap"><div class="sla-bar" style="background:var(--red)" id="slaRespBarDemorado"></div></div>
+            <div class="sla-pct" style="color:var(--red)" id="slaRespPctDemorado">—</div>
+            <div class="sla-count" id="slaRespCntDemorado"></div>
+          </div>
+        </div>
+        <div style="margin-top:0.75rem;font-size:0.58rem;color:var(--text-dim);">Imediato &lt;1min · Normal 1-3min · Demorado &gt;3min</div>
+      </div>
+
+    </div>
+
     <!-- COMPARATIVO + TABELA -->
     <div class="metrics-grid anim" style="animation-delay:0.1s;grid-template-columns:1fr 2fr;margin-bottom:1.75rem;">
 
-      <!-- Comparativo últimos 7 dias -->
       <div class="metric-card">
         <div class="metric-header">
           <div class="metric-icon" style="background:rgba(0,214,143,0.12)">📅</div>
@@ -335,7 +388,6 @@ td{padding:0.6rem 0.75rem;font-size:0.78rem;}
         </div>
       </div>
 
-      <!-- Tabela recentes -->
       <div class="metric-card">
         <div class="metric-header">
           <div class="metric-icon" style="background:rgba(168,85,247,0.12)">📋</div>
@@ -350,11 +402,13 @@ td{padding:0.6rem 0.75rem;font-size:0.78rem;}
                 <th>Concluído</th>
                 <th>Espera</th>
                 <th>Atendimento</th>
+                <th>Resp. Média</th>
+                <th>Msgs</th>
                 <th>SLA</th>
               </tr>
             </thead>
             <tbody id="tableBody">
-              <tr><td colspan="6" class="empty-table">Carregando...</td></tr>
+              <tr><td colspan="8" class="empty-table">Carregando...</td></tr>
             </tbody>
           </table>
         </div>
@@ -367,45 +421,37 @@ td{padding:0.6rem 0.75rem;font-size:0.78rem;}
 <script>
 // ── UTILS ──────────────────────────────────────────────────────────────────
 function fmtTime(secs) {
-  if (!secs && secs !== 0) return '—';
+  if (secs === null || secs === undefined) return '—';
   if (secs < 60) return secs + 's';
   const m = Math.floor(secs / 60), s = secs % 60;
   return s > 0 ? `${m}m ${s}s` : `${m}m`;
 }
-
 function fmtHora(iso) {
   if (!iso) return '—';
   return new Date(iso).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 }
-
 function fmtData(iso) {
   if (!iso) return '—';
   return new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 }
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+function nDaysAgo(n) { const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString().slice(0, 10); }
+function pct(part, total) { return total ? Math.round(part / total * 100) : 0; }
 
-function todayStr() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function nDaysAgo(n) {
-  const d = new Date();
-  d.setDate(d.getDate() - n);
-  return d.toISOString().slice(0, 10);
-}
-
-function pct(part, total) {
-  return total ? Math.round(part / total * 100) : 0;
+function median(arr) {
+  if (!arr.length) return null;
+  const s = [...arr].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 !== 0 ? s[m] : Math.round((s[m - 1] + s[m]) / 2);
 }
 
 function calcStats(records) {
   const temposEspera = records
     .filter(c => c.assumidoEm && c.chegou)
     .map(c => Math.round((new Date(c.assumidoEm) - new Date(c.chegou)) / 1000));
-
   const temposAtend = records
     .filter(c => c.assumidoEm && c.encerradoEm)
     .map(c => Math.round((new Date(c.encerradoEm) - new Date(c.assumidoEm)) / 1000));
-
   const temposTotal = records
     .filter(c => c.chegou && c.encerradoEm)
     .map(c => Math.round((new Date(c.encerradoEm) - new Date(c.chegou)) / 1000));
@@ -415,55 +461,82 @@ function calcStats(records) {
   const min = arr => arr.length ? Math.min(...arr) : null;
 
   const sla = { rapido: 0, medio: 0, lento: 0 };
-  temposEspera.forEach(t => {
-    if (t < 300) sla.rapido++;
-    else if (t < 600) sla.medio++;
-    else sla.lento++;
-  });
+  temposEspera.forEach(t => { if (t < 300) sla.rapido++; else if (t < 600) sla.medio++; else sla.lento++; });
 
   const porHora = Array(24).fill(0);
-  records.forEach(c => {
-    if (c.encerradoEm) porHora[new Date(c.encerradoEm).getHours()]++;
+  records.forEach(c => { if (c.encerradoEm) porHora[new Date(c.encerradoEm).getHours()]++; });
+
+  // ── Métricas de resposta do atendente ──
+  // Junta todos os intervalos de todos os atendimentos do período
+  const todosIntervalos = records.flatMap(c => c.intervaloRespostas || []);
+  const comDados = records.filter(c => c.totalMensagens > 0);
+
+  const slaResp = { imediato: 0, normal: 0, demorado: 0 };
+  todosIntervalos.forEach(t => {
+    if (t < 60) slaResp.imediato++;
+    else if (t < 180) slaResp.normal++;
+    else slaResp.demorado++;
   });
 
-  return { espera: { avg: avg(temposEspera), max: max(temposEspera), min: min(temposEspera) },
-           atend: { avg: avg(temposAtend), max: max(temposAtend), min: min(temposAtend) },
-           total: { avg: avg(temposTotal), max: max(temposTotal), min: min(temposTotal) },
-           sla, porHora, temposEspera };
+  // Distribuição por faixas
+  const faixas = [
+    { label: '< 30s',     min: 0,    max: 30   },
+    { label: '30s – 1m',  min: 30,   max: 60   },
+    { label: '1m – 2m',   min: 60,   max: 120  },
+    { label: '2m – 5m',   min: 120,  max: 300  },
+    { label: '5m – 10m',  min: 300,  max: 600  },
+    { label: '> 10m',     min: 600,  max: Infinity }
+  ];
+  const distribuicao = faixas.map(f => ({
+    label: f.label,
+    count: todosIntervalos.filter(t => t >= f.min && t < f.max).length
+  }));
+
+  return {
+    espera: { avg: avg(temposEspera), max: max(temposEspera), min: min(temposEspera) },
+    atend:  { avg: avg(temposAtend),  max: max(temposAtend),  min: min(temposAtend)  },
+    total:  { avg: avg(temposTotal),  max: max(temposTotal),  min: min(temposTotal)  },
+    sla, porHora,
+    resposta: {
+      avg:     avg(todosIntervalos),
+      mediana: median(todosIntervalos),
+      max:     max(todosIntervalos),
+      min:     min(todosIntervalos),
+      total:   todosIntervalos.length,
+      cobertura: records.length ? Math.round(comDados.length / records.length * 100) : 0,
+      comDados:  comDados.length,
+      sla:       slaResp,
+      distribuicao
+    }
+  };
 }
 
 // ── ESTADO ─────────────────────────────────────────────────────────────────
 let allHistory = [];
 let liveStats = { waiting: 0, inProgress: 0 };
 let currentFrom = todayStr();
-let currentTo = todayStr();
+let currentTo   = todayStr();
 
-// ── FILTRO ─────────────────────────────────────────────────────────────────
 function setToday() {
   const t = todayStr();
   document.getElementById('fromDate').value = t;
-  document.getElementById('toDate').value = t;
-  currentFrom = t; currentTo = t;
-  renderAll();
+  document.getElementById('toDate').value   = t;
+  currentFrom = t; currentTo = t; renderAll();
 }
-
 function setWeek() {
   const from = nDaysAgo(6), to = todayStr();
   document.getElementById('fromDate').value = from;
-  document.getElementById('toDate').value = to;
-  currentFrom = from; currentTo = to;
-  renderAll();
+  document.getElementById('toDate').value   = to;
+  currentFrom = from; currentTo = to; renderAll();
 }
-
 function applyFilter() {
   currentFrom = document.getElementById('fromDate').value;
-  currentTo = document.getElementById('toDate').value;
+  currentTo   = document.getElementById('toDate').value;
   renderAll();
 }
-
 function getFiltered() {
   const from = new Date(currentFrom + 'T00:00:00');
-  const to = new Date(currentTo + 'T23:59:59');
+  const to   = new Date(currentTo   + 'T23:59:59');
   return allHistory.filter(c => {
     if (!c.encerradoEm) return false;
     const d = new Date(c.encerradoEm);
@@ -474,64 +547,98 @@ function getFiltered() {
 // ── RENDER ─────────────────────────────────────────────────────────────────
 function renderAll() {
   const filtered = getFiltered();
-  const stats = calcStats(filtered);
+  const stats    = calcStats(filtered);
 
   // live
-  document.getElementById('liveWaiting').textContent = liveStats.waiting;
-  document.getElementById('liveActive').textContent = liveStats.inProgress;
-
-  // concluídos hoje
+  document.getElementById('liveWaiting').textContent  = liveStats.waiting;
+  document.getElementById('liveActive').textContent   = liveStats.inProgress;
   const hoje = todayStr();
   const doneHoje = allHistory.filter(c => c.encerradoEm && c.encerradoEm.startsWith(hoje)).length;
-  document.getElementById('liveDone').textContent = doneHoje;
+  document.getElementById('liveDone').textContent  = doneHoje;
   document.getElementById('liveTotal').textContent = filtered.length;
   document.getElementById('resultInfo').textContent =
     filtered.length === 0 ? 'Nenhum atendimento no período' :
     `${filtered.length} atendimento${filtered.length > 1 ? 's' : ''} encontrado${filtered.length > 1 ? 's' : ''}`;
 
-  // tempos
+  // tempos tradicionais
   document.getElementById('esperaAvg').textContent = fmtTime(stats.espera.avg);
   document.getElementById('esperaMax').textContent = fmtTime(stats.espera.max);
   document.getElementById('esperaMin').textContent = fmtTime(stats.espera.min);
-  document.getElementById('atendAvg').textContent = fmtTime(stats.atend.avg);
-  document.getElementById('atendMax').textContent = fmtTime(stats.atend.max);
-  document.getElementById('atendMin').textContent = fmtTime(stats.atend.min);
-  document.getElementById('totalAvg').textContent = fmtTime(stats.total.avg);
-  document.getElementById('totalMax').textContent = fmtTime(stats.total.max);
-  document.getElementById('totalMin').textContent = fmtTime(stats.total.min);
+  document.getElementById('atendAvg').textContent  = fmtTime(stats.atend.avg);
+  document.getElementById('atendMax').textContent  = fmtTime(stats.atend.max);
+  document.getElementById('atendMin').textContent  = fmtTime(stats.atend.min);
+  document.getElementById('totalAvg').textContent  = fmtTime(stats.total.avg);
+  document.getElementById('totalMax').textContent  = fmtTime(stats.total.max);
+  document.getElementById('totalMin').textContent  = fmtTime(stats.total.min);
 
-  // SLA
+  // SLA espera
   const slaTotal = stats.sla.rapido + stats.sla.medio + stats.sla.lento;
   const pR = pct(stats.sla.rapido, slaTotal);
-  const pM = pct(stats.sla.medio, slaTotal);
-  const pL = pct(stats.sla.lento, slaTotal);
+  const pM = pct(stats.sla.medio,  slaTotal);
+  const pL = pct(stats.sla.lento,  slaTotal);
   document.getElementById('slaBarRapido').style.width = pR + '%';
-  document.getElementById('slaBarMedio').style.width = pM + '%';
-  document.getElementById('slaBarLento').style.width = pL + '%';
+  document.getElementById('slaBarMedio').style.width  = pM + '%';
+  document.getElementById('slaBarLento').style.width  = pL + '%';
   document.getElementById('slaPctRapido').textContent = slaTotal ? pR + '%' : '—';
-  document.getElementById('slaPctMedio').textContent = slaTotal ? pM + '%' : '—';
-  document.getElementById('slaPctLento').textContent = slaTotal ? pL + '%' : '—';
+  document.getElementById('slaPctMedio').textContent  = slaTotal ? pM + '%' : '—';
+  document.getElementById('slaPctLento').textContent  = slaTotal ? pL + '%' : '—';
   document.getElementById('slaCntRapido').textContent = stats.sla.rapido || '';
-  document.getElementById('slaCntMedio').textContent = stats.sla.medio || '';
-  document.getElementById('slaCntLento').textContent = stats.sla.lento || '';
+  document.getElementById('slaCntMedio').textContent  = stats.sla.medio  || '';
+  document.getElementById('slaCntLento').textContent  = stats.sla.lento  || '';
 
-  // gráfico por hora
+  // ── Métricas de resposta do atendente ──
+  const r = stats.resposta;
+  document.getElementById('respAvg').textContent     = fmtTime(r.avg);
+  document.getElementById('respMediana').textContent = fmtTime(r.mediana);
+  document.getElementById('respMax').textContent     = fmtTime(r.max);
+  document.getElementById('respMin').textContent     = fmtTime(r.min);
+  document.getElementById('respTotal').textContent   = r.total || '—';
+  document.getElementById('respCoverage').textContent =
+    r.comDados === 0
+      ? '⚠️ Nenhum atendimento com dados de resposta ainda. Configure o n8n para chamar POST /mensagem a cada mensagem do atendente.'
+      : `📊 Cobertura: ${r.comDados} de ${filtered.length} atendimentos com dados de resposta (${r.cobertura}%)`;
+
+  // SLA resposta
+  const slaRTotal = r.sla.imediato + r.sla.normal + r.sla.demorado;
+  const pI = pct(r.sla.imediato, slaRTotal);
+  const pN = pct(r.sla.normal,   slaRTotal);
+  const pD = pct(r.sla.demorado, slaRTotal);
+  document.getElementById('slaRespBarImediato').style.width = pI + '%';
+  document.getElementById('slaRespBarNormal').style.width   = pN + '%';
+  document.getElementById('slaRespBarDemorado').style.width = pD + '%';
+  document.getElementById('slaRespPctImediato').textContent = slaRTotal ? pI + '%' : '—';
+  document.getElementById('slaRespPctNormal').textContent   = slaRTotal ? pN + '%' : '—';
+  document.getElementById('slaRespPctDemorado').textContent = slaRTotal ? pD + '%' : '—';
+  document.getElementById('slaRespCntImediato').textContent = r.sla.imediato || '';
+  document.getElementById('slaRespCntNormal').textContent   = r.sla.normal   || '';
+  document.getElementById('slaRespCntDemorado').textContent = r.sla.demorado || '';
+
+  // Distribuição
+  const distEl = document.getElementById('distBars');
+  const maxDist = Math.max(...r.distribuicao.map(d => d.count), 1);
+  if (r.total === 0) {
+    distEl.innerHTML = '<div style="color:var(--text-dim);font-size:0.75rem">Sem dados no período</div>';
+  } else {
+    distEl.innerHTML = r.distribuicao.map(d => `
+      <div class="dist-row">
+        <div class="dist-name">${d.label}</div>
+        <div class="dist-bar-wrap"><div class="dist-bar" style="width:${pct(d.count, maxDist)}%"></div></div>
+        <div class="dist-pct">${r.total ? pct(d.count, r.total) + '%' : '—'}</div>
+        <div class="dist-count">${d.count || ''}</div>
+      </div>
+    `).join('');
+  }
+
   renderHourChart(stats.porHora);
-
-  // comparativo
   renderCompare();
-
-  // tabela
   renderTable(filtered);
 }
 
 function renderHourChart(porHora) {
-  const chart = document.getElementById('hourChart');
+  const chart     = document.getElementById('hourChart');
   const gridLines = document.getElementById('chartGridLines');
-  const maxVal = Math.max(...porHora, 1);
-  const nowHour = new Date().getHours();
-
-  // grid lines
+  const maxVal    = Math.max(...porHora, 1);
+  const nowHour   = new Date().getHours();
   gridLines.innerHTML = '';
   [0.25, 0.5, 0.75, 1].forEach(f => {
     const line = document.createElement('div');
@@ -539,38 +646,19 @@ function renderHourChart(porHora) {
     line.style.bottom = (f * 100) + '%';
     gridLines.appendChild(line);
   });
-
-  // remover barras antigas
   [...chart.querySelectorAll('.bar-col')].forEach(el => el.remove());
-
-  const horasExibir = Array.from({ length: 24 }, (_, i) => i);
-  horasExibir.forEach(h => {
+  Array.from({ length: 24 }, (_, h) => h).forEach(h => {
     const val = porHora[h];
-    const heightPct = (val / maxVal) * 100;
-    const isNow = h === nowHour;
-
-    const col = document.createElement('div');
-    col.className = 'bar-col';
-
+    const col = document.createElement('div'); col.className = 'bar-col';
     const bar = document.createElement('div');
-    bar.className = 'bar-inner' + (isNow ? ' active-bar' : '');
-    bar.style.height = '0%';
-    bar.style.marginTop = 'auto';
-
-    const tip = document.createElement('div');
-    tip.className = 'bar-tooltip';
-    tip.textContent = `${h}h: ${val} atend.`;
-    bar.appendChild(tip);
-
-    const label = document.createElement('div');
-    label.className = 'bar-hour';
+    bar.className = 'bar-inner' + (h === nowHour ? ' active-bar' : '');
+    bar.style.height = '0%'; bar.style.marginTop = 'auto';
+    const tip = document.createElement('div'); tip.className = 'bar-tooltip';
+    tip.textContent = `${h}h: ${val} atend.`; bar.appendChild(tip);
+    const label = document.createElement('div'); label.className = 'bar-hour';
     label.textContent = h % 3 === 0 ? h + 'h' : '';
-
-    col.appendChild(bar);
-    col.appendChild(label);
-    chart.appendChild(col);
-
-    setTimeout(() => { bar.style.height = heightPct + '%'; }, 50);
+    col.appendChild(bar); col.appendChild(label); chart.appendChild(col);
+    setTimeout(() => { bar.style.height = (val / maxVal * 100) + '%'; }, 50);
   });
 }
 
@@ -578,37 +666,30 @@ function renderCompare() {
   const list = document.getElementById('compareList');
   const days = [];
   for (let i = 6; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const str = d.toISOString().slice(0, 10);
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const str   = d.toISOString().slice(0, 10);
     const count = allHistory.filter(c => c.encerradoEm && c.encerradoEm.startsWith(str)).length;
     const label = i === 0 ? 'Hoje' : i === 1 ? 'Ontem' :
       d.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' });
     days.push({ str, label, count, isToday: i === 0 });
   }
-
   const maxCount = Math.max(...days.map(d => d.count), 1);
   list.innerHTML = days.map(d => `
     <div class="compare-row">
       <div class="compare-date ${d.isToday ? 'today' : ''}">${d.label}</div>
-      <div class="compare-bar-wrap">
-        <div class="compare-bar ${d.isToday ? 'today' : ''}" style="width:${pct(d.count, maxCount)}%"></div>
-      </div>
+      <div class="compare-bar-wrap"><div class="compare-bar ${d.isToday ? 'today' : ''}" style="width:${pct(d.count, maxCount)}%"></div></div>
       <div class="compare-num">${d.count}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function renderTable(records) {
-  const tbody = document.getElementById('tableBody');
+  const tbody  = document.getElementById('tableBody');
   if (!records.length) {
-    tbody.innerHTML = '<tr><td colspan="6" class="empty-table">Nenhum atendimento no período selecionado</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="empty-table">Nenhum atendimento no período selecionado</td></tr>';
     return;
   }
-
   const sorted = [...records].sort((a, b) => new Date(b.encerradoEm) - new Date(a.encerradoEm));
-  const shown = sorted.slice(0, 50);
-
+  const shown  = sorted.slice(0, 50);
   tbody.innerHTML = shown.map(c => {
     const espera = c.assumidoEm && c.chegou
       ? Math.round((new Date(c.assumidoEm) - new Date(c.chegou)) / 1000) : null;
@@ -617,35 +698,43 @@ function renderTable(records) {
 
     let slaBadge = '';
     if (espera !== null) {
-      if (espera < 300) slaBadge = '<span class="badge-sla badge-rapido">Rápido</span>';
+      if (espera < 300)      slaBadge = '<span class="badge-sla badge-rapido">Rápido</span>';
       else if (espera < 600) slaBadge = '<span class="badge-sla badge-medio">Médio</span>';
-      else slaBadge = '<span class="badge-sla badge-lento">Lento</span>';
+      else                   slaBadge = '<span class="badge-sla badge-lento">Lento</span>';
     }
 
     const dataLabel = c.encerradoEm && !c.encerradoEm.startsWith(todayStr())
       ? fmtData(c.encerradoEm) + ' ' : '';
 
+    const respMedia = c.avgResposta !== null && c.avgResposta !== undefined
+      ? `<span style="color:var(--orange)">${fmtTime(c.avgResposta)}</span>`
+      : '<span style="color:var(--text-dim)">—</span>';
+
+    const msgs = c.totalMensagens > 0
+      ? `<span style="color:var(--cyan)">${c.totalMensagens}</span>`
+      : '<span style="color:var(--text-dim)">—</span>';
+
     return `<tr>
-      <td class="td-name">${c.nome}</td>
+      <td class="td-name">${c.nome || 'Cliente'}</td>
       <td style="color:var(--text-mid)">${dataLabel}${fmtHora(c.chegou)}</td>
       <td style="color:var(--text-mid)">${dataLabel}${fmtHora(c.encerradoEm)}</td>
       <td class="td-time" style="color:var(--yellow)">${fmtTime(espera)}</td>
       <td class="td-time" style="color:var(--blue)">${fmtTime(atend)}</td>
+      <td class="td-time">${respMedia}</td>
+      <td>${msgs}</td>
       <td>${slaBadge}</td>
     </tr>`;
   }).join('');
-
   if (sorted.length > 50) {
-    tbody.innerHTML += `<tr><td colspan="6" class="empty-table" style="padding:0.5rem">
-      Mostrando 50 de ${sorted.length} registros
-    </td></tr>`;
+    tbody.innerHTML += `<tr><td colspan="8" class="empty-table" style="padding:0.5rem">
+      Mostrando 50 de ${sorted.length} registros</td></tr>`;
   }
 }
 
 // ── DADOS ──────────────────────────────────────────────────────────────────
 async function fetchHistory() {
   try {
-    const res = await fetch(`/api/history`);
+    const res  = await fetch(`/api/history`);
     const data = await res.json();
     allHistory = data.data || [];
     renderAll();
@@ -654,40 +743,34 @@ async function fetchHistory() {
 
 async function fetchLive() {
   try {
-    const res = await fetch('/api/stats');
+    const res  = await fetch('/api/stats');
     const data = await res.json();
-    liveStats = data.live || { waiting: 0, inProgress: 0 };
+    liveStats  = data.live || { waiting: 0, inProgress: 0 };
     document.getElementById('liveWaiting').textContent = liveStats.waiting;
-    document.getElementById('liveActive').textContent = liveStats.inProgress;
+    document.getElementById('liveActive').textContent  = liveStats.inProgress;
   } catch(e) {}
 }
 
-// ── WEBSOCKET (atualiza ao vivo quando alguém conclui) ──────────────────────
 function connectWS() {
-  const wsUrl = window.location.origin.replace('http', 'ws');
-  const ws = new WebSocket(wsUrl);
+  const ws = new WebSocket(window.location.origin.replace('http', 'ws'));
   ws.onmessage = (e) => {
     const msg = JSON.parse(e.data);
     if (msg.type === 'atualizar' || msg.type === 'state' || msg.type === 'novo_cliente') {
-      fetchHistory();
-      fetchLive();
+      fetchHistory(); fetchLive();
     }
   };
   ws.onclose = () => setTimeout(connectWS, 3000);
 }
 
-// ── CLOCK ──────────────────────────────────────────────────────────────────
 function updateClock() {
   document.getElementById('clock').textContent = new Date().toLocaleTimeString('pt-BR');
 }
-setInterval(updateClock, 1000);
-updateClock();
+setInterval(updateClock, 1000); updateClock();
 
-// ── INIT ───────────────────────────────────────────────────────────────────
 (async () => {
   const t = todayStr();
   document.getElementById('fromDate').value = t;
-  document.getElementById('toDate').value = t;
+  document.getElementById('toDate').value   = t;
   await fetchHistory();
   await fetchLive();
   connectWS();
