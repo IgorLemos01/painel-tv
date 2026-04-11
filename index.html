@@ -270,7 +270,8 @@ function setWsStatus(online){
 function render(){
   const waiting=queue.filter(c=>c.status==='aguardando');
   const active=queue.filter(c=>c.status==='em_atendimento');
-  const todayDone=history.filter(c=>c.encerradoEm&&new Date(c.encerradoEm).toDateString()===new Date().toDateString()).length;
+  const hoje = new Date().toISOString().slice(0, 10);
+  const todayDone = history.filter(c => c.encerradoEm && c.encerradoEm.startsWith(hoje)).length;
   document.getElementById('statWaiting').textContent=waiting.length;
   document.getElementById('statActive').textContent=active.length;
   document.getElementById('statDone').textContent=todayDone;
